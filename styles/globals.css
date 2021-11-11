@@ -1,3 +1,104 @@
+/* ==========================================================
+ reseting
+========================================================== */
+body, div, pre, p, blockquote, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, th, td, button, figure, figcaption {
+  margin: 0;
+  padding: 0;
+}
+
+input, textarea,
+select {
+  margin: 0;
+  font-size: 16px;
+}
+
+button {
+  padding: 0;
+  border: none;
+  overflow: visible;
+  background: none;
+  vertical-align: top;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+label {
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 100%;
+}
+
+fieldset, img {
+  border: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+address, caption, code, em, th {
+  font-style: normal;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+caption, th {
+  text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6, strong, em {
+  font-size: 100%;
+  font-weight: inherit;
+}
+
+sup, sub {
+  font-size: 63%;
+}
+
+sup {
+  font-size: 75.5%;
+  vertical-align: top;
+}
+
+sub {
+  font-size: 75.5%;
+  vertical-align: bottom;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-size: 10px;
+}
+
+body {
+  min-height: 100%;
+  font-size: 1.6rem;
+  line-height: 1.75;
+
+}
+@media only screen and (max-width: 768px) {
+  body {
+    font-size: 1.4rem;
+  }
+}
+
 html,
 body {
   padding: 0;
@@ -11,6 +112,10 @@ a {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+a[href^="tel"] {
+  color: inherit;
+}
+
+i {
+  font-style: normal;
 }
