@@ -29,7 +29,7 @@ const Modal: React.FC = () => {
             <>
               <S.ModalBg onClick={onClickCloseModal}></S.ModalBg>
               <S.ModalBody scrollY={blogPostModalState.scrollY}>
-                <S.Figure><img src={blogPost.thumbnail} alt={blogPost.title} /></S.Figure>
+                <S.Figure><img src={blogPost.thumbnail_large} alt={blogPost.title} /></S.Figure>
                 <S.Info>
                   <S.Category>{blogPost.category}</S.Category>
                   <S.Date>{blogPost.date}</S.Date>
@@ -84,7 +84,6 @@ interface ModalBodyProps {
 }
 S.ModalBody = styled.section<ModalBodyProps>`
   width: 360px;
-  max-height: 80vh;
   padding: 30px;
   border-radius: 4px;
   background: ${({theme}) => theme.colors.bg};
@@ -92,7 +91,6 @@ S.ModalBody = styled.section<ModalBodyProps>`
   left: calc(50% - 180px);
   top: ${({scrollY}) => scrollY + 100}px;
   z-index: 6;
-  overflow: auto;
   animation: ${popIn} .3s cubic-bezier(0.34, 1.56, 0.64, 1), ${fadeIn} .3s;
   @media screen and (max-width: 768px) {
     padding: 20px;
