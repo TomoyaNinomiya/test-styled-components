@@ -17,7 +17,7 @@ const Modal: React.FC = () => {
       blogPostIndex: -1,
       scrollY: 100
     });
-  }, []);
+  }, [setBlogPostModalState]);
   switch(blogPostsLoadable.state) {
     case 'hasValue':
 
