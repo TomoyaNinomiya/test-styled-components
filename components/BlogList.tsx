@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Link from './Link';
+import React, { useCallback } from 'react';
+import { useSetRecoilState, useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
 import type { StyledComponent } from 'styled-components';
 import ContentLoader from 'react-content-loader';
+import {BlogPostsState} from '../store/blogPosts';
+import { BlogPostModalState } from '../store/blogPosts';
 
 const BlogItemPlaceholder: React.FC = props => {
   return (
@@ -16,95 +17,59 @@ const BlogItemPlaceholder: React.FC = props => {
   )
 }
 
-interface BlogPost {
-  category: string
-  date: string
-  post_type: string
-  thumbnail: string
-  title: string
-  url: string
-}
-
-const fetchBlogPosts = async () => {
-  if (process.env.isProd) {
-    try {
-      const response = await axios.get<BlogPost[]>('https://launchcart.jp/get_post_info/', {
-        params: {
-          latest: true,
-          posts_per_page: 6
-        },
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      });
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  } else {
-    return require('../moch/get_post_info.json');
-  }
-}
-
 const BlogItem: React.FC<{
   title: string,
   url: string,
-  thumbnail: string
-}> = ({title, url, thumbnail}) => {
+  thumbnail: string,
+  index: number
+}> = ({title, url, thumbnail, index}) => {
+  const setBlogPostModalState = useSetRecoilState(BlogPostModalState);
+
+  const onClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(({currentTarget}) => {
+    setBlogPostModalState({
+      isActive: true,
+      blogPostIndex: Number(currentTarget.dataset.index),
+      scrollY: window.scrollY
+    });
+  }, [setBlogPostModalState]);
 
   return (
     <S.Item>
-      <Link href={url} passHref>
-        <S.Link>
-          <S.Figure><img src={thumbnail} alt={title} /></S.Figure>
-          <S.Title>{title}</S.Title>
-        </S.Link>
-      </Link>
+      <S.Link type="button" onClick={onClick} data-index={index} aria-label="記事の詳細を開く">
+        <S.Figure><img src={thumbnail} alt={title} /></S.Figure>
+        <S.Title>{title}</S.Title>
+      </S.Link>
     </S.Item>
   )
 }
 
 const BlogList: React.FC = () => {
 
-  const [blogPosts, setBlogPosts] = useState([] as BlogPost[]);
+  const blogPostsLoadable = useRecoilValueLoadable(BlogPostsState);
 
-  const [blogPostsLoadState, setBlogPostsLoadState] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      setBlogPosts(await fetchBlogPosts());
-      setBlogPostsLoadState(true);
-    })();
-  }, [fetchBlogPosts, setBlogPosts, setBlogPostsLoadState]);
-
-  if (blogPostsLoadState) {
-    return (
-      <S.List>
-        {
-          blogPosts.map((blogPost, index) => (
-            <BlogItem title={blogPost.title} url={blogPost.url} thumbnail={blogPost.thumbnail} key={index} />
-          ))
-        }
-      </S.List>
-    )
-  } else {
-    return (
-      <S.List>
-        { [1,2,3,4,5,6].map(item => <S.BlogItemPlaceholder key={item} />) }
-      </S.List>
-    )
+  switch (blogPostsLoadable.state) {
+    case 'hasValue':
+      return (
+        <S.List>
+          {
+            blogPostsLoadable.contents.map((blogPost, index) => (
+              <BlogItem title={blogPost.title} url={blogPost.url} thumbnail={blogPost.thumbnail} index={index} key={index} />
+            ))
+          }
+        </S.List>
+      )
+    case 'loading':
+      return (
+        <S.List>
+          { [1,2,3,4,5,6].map(item => <S.Item key={item}><BlogItemPlaceholder /></S.Item>) }
+        </S.List>
+      )
+    case 'hasError':
+      throw blogPostsLoadable.contents
   }
 }
 
 const S: {[s: string]: StyledComponent<any, any, {}, never>} = {};
-
-S.BlogItemPlaceholder = styled(BlogItemPlaceholder)`
-  width: 300px;
-  margin: 0 20px 40px;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
 
 S.Item = styled.li`
   width: 300px;
@@ -114,9 +79,10 @@ S.Item = styled.li`
   }
 `;
 
-S.Link = styled.a`
+S.Link = styled.button`
   display: flex;
   justify-content: space-between;
+  text-align: left;
 `;
 
 S.Figure = styled.figure`

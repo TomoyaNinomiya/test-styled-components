@@ -3,6 +3,7 @@ import type { StyledComponent } from 'styled-components';
 import Head from './Head'
 import Header from './Header';
 import Footer from './Footer';
+import Modal from '../components/Modal';
 
 const theme = {
   colors: {
@@ -20,6 +21,7 @@ const Layout: React.FC = ({children}) => {
       <Header />
       <S.Main>{children}</S.Main>
       <Footer />
+      <Modal />
     </ThemeProvider>
   )
 }
