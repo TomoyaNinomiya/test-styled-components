@@ -6,9 +6,7 @@ import { BlogPostsState, BlogPostModalState } from '../store/blogPosts';
 
 const Modal: React.FC = () => {
 
-
   const blogPostsLoadable = useRecoilValueLoadable(BlogPostsState);
-
   const [blogPostModalState, setBlogPostModalState] = useRecoilState(BlogPostModalState);
 
   const onClickCloseModal = useCallback(() => {

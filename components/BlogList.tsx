@@ -23,6 +23,7 @@ const BlogItem: React.FC<{
   thumbnail: string,
   index: number
 }> = ({title, url, thumbnail, index}) => {
+  
   const setBlogPostModalState = useSetRecoilState(BlogPostModalState);
 
   const onClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(({currentTarget}) => {
