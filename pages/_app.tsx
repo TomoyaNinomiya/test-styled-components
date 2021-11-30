@@ -1,6 +1,6 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
-import Layout from '../components/layout'
+import Layout from '../components/common/layout'
 import {
   RecoilRoot
 } from 'recoil';

@@ -1,9 +1,9 @@
 import styled, { ThemeProvider } from 'styled-components';
-import type { StyledComponent } from 'styled-components';
 import Head from './Head'
 import Header from './Header';
 import Footer from './Footer';
-import Modal from '../components/Modal';
+import Modal from './Modal';
+import styles from './layout.module.scss';
 
 const theme = {
   colors: {
@@ -19,7 +19,7 @@ const Layout: React.FC = ({children}) => {
     <ThemeProvider theme={theme}>
       <Head />
       <Header />
-      <S.Main>{children}</S.Main>
+      <main className={styles.main}>{children}</main>
       <Footer />
       <Modal />
     </ThemeProvider>
@@ -27,15 +27,3 @@ const Layout: React.FC = ({children}) => {
 }
 
 export default Layout;
-
-const S: {[s: string]: StyledComponent<any, any, {}, never>} = {};
-
-S.Main = styled.main`
-  min-height: calc(100vh - 75px);
-  padding: calc(4rem + 50px) 15px 4rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
