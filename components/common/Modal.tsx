@@ -32,7 +32,7 @@ const Modal: React.FC = () => {
                   <p className={styles.date}>{blogPost.date}</p>
                 </div>
                 <h3 className={styles.title }>{blogPost.title}</h3>
-                <a className={styles.link} href={blogPost.url} target="_blank" onClick={onClickCloseModal}>もっと記事を読む &rarr;</a>
+                <a className={styles.link} href={blogPost.url} target="_blank" rel="noreferrer" onClick={onClickCloseModal}>もっと記事を読む &rarr;</a>
                 <button className={styles.closeButton} type="button" aria-label="モーダルを閉じる" onClick={onClickCloseModal}>&times; Close</button>
               </div>
             </> 

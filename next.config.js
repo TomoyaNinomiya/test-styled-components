@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const isProd = process.env.NODE_ENV == 'production';
-const url = isProd ? '/demo/ninomiya/styled-components' : '';
+const url = isProd ? '/demo/ninomiya/css-modules' : '';
 module.exports = {
   reactStrictMode: true,
   assetPrefix: url,
