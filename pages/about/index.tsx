@@ -9,7 +9,7 @@ const Home: NextPage = () => {
       <Head title="About"></Head>
       <h2 className={styles.title}>About</h2>
       <p className={styles.description}>
-        Next.js で styled components を使うDEMOのページです。<br />
+        Next.js で CSS Modules を使うDEMOのページです。<br />
         <Link href="/" passHref>
           <a className={styles.link}>&larr; Back to Home</a>
         </Link>
